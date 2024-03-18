@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -9,18 +9,16 @@ import {
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {AuthContext} from '../context/AuthContext';
-
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
 import {dummyData} from '../constants';
-const Tab = createBottomTabNavigator();
 
-const HomeScreen = ({navigation}) => {
+
+
+const HomeScreen = () => {
   const {
     userInfo,
     isLoading,
@@ -32,8 +30,9 @@ const HomeScreen = ({navigation}) => {
   } = useContext(AuthContext);
 
   useEffect(() => {
-    fetchProducts();
     fetchCountries();
+    fetchProducts();
+
     console.log('Fetching products : ' + products);
 
     console.log('length:' + products);
@@ -84,7 +83,7 @@ const HomeScreen = ({navigation}) => {
                   fontFamily: 'Roboto-Regular',
                   fontSize: 16,
                   color: '#fff',
-                  fontWeight: 'semi-bold',
+                  fontWeight: 'bold',
                 }}>
                 LoggedIn as:
               </Text>

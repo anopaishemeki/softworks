@@ -13,12 +13,12 @@ export const AuthProvider = ({children}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [splashLoading, setSplashLoading] = useState(false);
 
-  const register = (fname, lname, country_id, phone, email, password) => {
+  const register = async (fname, lname, country_id, phone, email, password) => {
     setIsLoading(true);
     setError(false);
     console.log(fname, lname, country_id, phone, email, password);
 
-    axios
+    await axios
       .post(`${BASE_URL}/customer/signup`, {
         fname,
         lname,
@@ -28,9 +28,6 @@ export const AuthProvider = ({children}) => {
         password,
       })
       .then(res => {
-        // let userInfo = res.data;
-        // setUserInfo(userInfo);
-        // AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
         setIsLoading(false);
         setError(false);
         console.log(res.data);
@@ -39,27 +36,24 @@ export const AuthProvider = ({children}) => {
         setError(true);
         console.log(`register error ${e?.message}`);
         setIsLoading(false);
-        
       });
   };
 
-  const login = (email, password) => {
+  const login = async (email, password) => {
     setIsLoading(true);
     setError(false);
 
-    axios
+    await axios
       .post(`${BASE_URL}/customer/signin`, {
         email,
         password,
       })
       .then(res => {
-        
         let userInfo = res.data;
         console.log(userInfo);
         setUserInfo(userInfo);
         AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
         setIsLoading(false);
-        
       })
       .catch(e => {
         setError(true);
@@ -70,25 +64,13 @@ export const AuthProvider = ({children}) => {
 
   const logout = () => {
     setIsLoading(true);
-
-    // axios
-    //   .post(
-    //     `${BASE_URL}/logout`,
-    //     {},
-    //     {
-    //       headers: {Authorization: `Bearer ${userInfo.access_token}`},
-    //     },
-    //   )
-    //   .then(res => {
-    // console.log(res.data);
     AsyncStorage.removeItem('userInfo');
     setUserInfo({});
     setIsLoading(false);
-    
   };
 
-  const fetchProducts = () => {
-    axios
+  const fetchProducts = async () => {
+    await axios
       .get(`${BASE_URL}/products`, {
         headers: {Authorization: `Bearer ${userInfo.token}`},
       })
@@ -97,8 +79,8 @@ export const AuthProvider = ({children}) => {
         console.log(products);
       });
   };
-  const fetchCountries = () => {
-    axios
+  const fetchCountries = async () => {
+    await axios
       .get(`${BASE_URL}/countries`, {
         headers: {Authorization: `Bearer ${userInfo.token}`},
       })

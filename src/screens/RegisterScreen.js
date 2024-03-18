@@ -90,7 +90,7 @@ const RegisterScreen = ({navigation}) => {
                   setEmail(values.email);
                   setPassword(values.password);
                   await register(fname, lname, country_id, phone, email, password);
-                  if(error){
+                  if(!error){
                     Alert.alert("Check your details and try again")}
                     else{
                       Alert.alert("Signup completed. An email has been send to you. Kindly confirm the email to proceed")
