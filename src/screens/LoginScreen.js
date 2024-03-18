@@ -98,7 +98,7 @@ const LoginScreen = ({navigation}) => {
               />
               {touched.password && errors.password && <Text style={styles.errorTxt}>{errors.password}</Text>}
              
-              <TouchableOpacity style ={{backgroundColor:isValid? "green":"yellow"}} className="py-3 rounded-xl"
+              <TouchableOpacity style ={{backgroundColor:isValid? "#2249D6":"#2D97DA"}} className="py-3 rounded-xl"
                onPress={handleSubmit}
                disabled= {!isValid}
                >
@@ -114,7 +114,7 @@ const LoginScreen = ({navigation}) => {
               <TouchableOpacity
                 onPress={() => navigation.navigate("Register")}
               >
-                <Text className="font-semibold text-yellow-500">SignUp</Text>
+                <Text className="font-bold text-blue-700">SignUp</Text>
               </TouchableOpacity>
             </View>
           </View>

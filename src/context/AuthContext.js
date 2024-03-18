@@ -84,11 +84,7 @@ export const AuthProvider = ({children}) => {
     AsyncStorage.removeItem('userInfo');
     setUserInfo({});
     setIsLoading(false);
-    // })
-    // .catch(e => {
-    //   console.log(`logout error ${e}`);
-    //   setIsLoading(false);
-    // });
+    
   };
 
   const fetchProducts = () => {

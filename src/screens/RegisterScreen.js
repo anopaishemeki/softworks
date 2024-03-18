@@ -61,7 +61,7 @@ const RegisterScreen = ({navigation}) => {
                 <View className="flex-row justify-start">
                   <TouchableOpacity
                     onPress={() => navigation.goBack()}
-                    className="bg-yellow-400 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
+                    className=" p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
                     <ArrowLeftIcon size="28" color="black" />
                   </TouchableOpacity>
                 </View>
@@ -90,7 +90,7 @@ const RegisterScreen = ({navigation}) => {
                   setEmail(values.email);
                   setPassword(values.password);
                   await register(fname, lname, country_id, phone, email, password);
-                  if(!error){
+                  if(error){
                     Alert.alert("Check your details and try again")}
                     else{
                       Alert.alert("Signup completed. An email has been send to you. Kindly confirm the email to proceed")
@@ -210,7 +210,7 @@ const RegisterScreen = ({navigation}) => {
 
                       <TouchableOpacity
                         className="py-3 bg-yellow-400 rounded-xl"
-                        style={{backgroundColor: isValid ? 'green' : 'yellow'}}
+                        style={{backgroundColor: isValid ? "#2249D6":"#2D97DA"}}
                         onPress={handleSubmit}
                         disabled={!isValid}>
                         <Text className="font-xl font-bold text-center text-gray-700">
@@ -224,7 +224,7 @@ const RegisterScreen = ({navigation}) => {
                       </Text>
                       <TouchableOpacity
                         onPress={() => navigation.navigate('Login')}>
-                        <Text className="font-semibold text-yellow-500">
+                        <Text className="font-bold text-blue-700">
                           Login
                         </Text>
                       </TouchableOpacity>
