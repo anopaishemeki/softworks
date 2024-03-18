@@ -15,6 +15,8 @@ import {AuthContext} from '../context/AuthContext';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ArrowLeftIcon} from 'react-native-heroicons/solid';
 import LinearGradient from 'react-native-linear-gradient';
+import * as yup from 'yup';
+import { Formik } from 'formik';
 
 const RegisterScreen = ({navigation}) => {
   const [fname, setFname] = useState(null);
@@ -25,6 +27,15 @@ const RegisterScreen = ({navigation}) => {
   const [password, setPassword] = useState(null);
 
   const {isLoading, register} = useContext(AuthContext);
+  const SignInSchema = yup.object().shape({
+    fname: yup.string().required('Firstname is required'),
+    lname: yup.string().required('lastName is required'),
+    country_id: yup.string().min(1,'Country_id must be atleast 1 digits ').max(1,'Country_id must be atmost 9 digits ').matches(/^[1-9]|10$/,"Enter digits only").required('Country_id is required'),
+    phone: yup.string().required('Phone is required'),
+    email: yup.string().email('Invalid email').required('Email is required'),
+    password: yup.string().min(3, 'Password must be at least 3 characters').required('Password is required'),
+
+    });
 
   return (
     <LinearGradient
@@ -54,66 +65,108 @@ const RegisterScreen = ({navigation}) => {
                 />
               </View>
             </View>
+            <Formik initialValues={{
+            fname:"",
+            lname:"",
+            country_id:"",
+            phone:"",
+            email:"",
+            password: "",
 
+          }}
+          validationSchema={SignInSchema}
+          onSubmit={values =>{
+            setFname(values.fname)
+            setLname(values.lname)
+            setCountry_id(values.country_id)
+            setPhone(values.phone)
+            setEmail(values.email)
+            setPassword(values.password)
+            register(fname, lname, country_id, phone, email, password);
+            
+          }
+          }
+          >
+             {({values,errors,touched,handleSubmit,handleChange,setFieldTouched,isValid}) =>(
             <View
               className="flex-1 bg-white px-8 pt-8"
               style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}>
               <View className="form space-y-2">
                 <Text className="text-black font-bold ml-4">First Name</Text>
                 <TextInput
-                  className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-                  value={fname}
+                  className="p-4 bg-gray-100 font-bold text-gray-700 rounded-2xl mb-3"
                   placeholderTextColor = "gray"
                   placeholder="Enter First Name"
-                  onChangeText={text => setFname(text)}
+                  value={values.fname}
+                  onChangeText={handleChange('fname')}
+                  onBlur={() =>{setFieldTouched('fname')}}
                 />
+                { touched.fname && errors.fname && <Text style={styles.errorTxt}>{errors.fname}</Text>}
                 <Text className="text-black font-bold ml-4">Last Name</Text>
                 <TextInput
-                  className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-                  value={lname}
+                  className="p-4 bg-gray-100 font-bold text-gray-700 rounded-2xl mb-3"
                   placeholderTextColor = "gray"
                   placeholder="Enter Last Name"
-                  onChangeText={text => setLname(text)}
+                  value={values.lname}
+                  onChangeText={handleChange('lname')}
+                  onBlur={() =>{setFieldTouched('lname')}}
                 />
+                { touched.lname && errors.lname && <Text style={styles.errorTxt}>{errors.lname}</Text>}
                 <Text className="text-black font-bold ml-4">Country</Text>
                 <TextInput
-                  className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-                  value={country_id}
+                  className="p-4 bg-gray-100 font-bold text-gray-700 rounded-2xl mb-3"
+            
                   placeholderTextColor = "gray"
                   placeholder="Enter Country"
-                  onChangeText={text => setCountry_id(text)}
+                  value={values.country_id}
+                  onChangeText={handleChange('country_id')}
+                  onBlur={() =>{setFieldTouched('country_id')}}
+                  keyboardType='phone-pad'
                 />
+                { touched.country_id && errors.country_id && <Text style={styles.errorTxt}>{errors.country_id}</Text>}
                 <Text className="text-black font-bold ml-4">Phone No</Text>
                 <TextInput
-                  className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-                  value={phone}
+                  className="p-4 bg-gray-100 font-bold text-gray-700 rounded-2xl mb-3"
+                 
                   placeholderTextColor = "gray"
                   placeholder="Enter Phone Number"
-                  onChangeText={text => setPhone(text)}
+                  value={values.phone}
+                  onChangeText={handleChange('phone')}
+                  onBlur={() =>{setFieldTouched('phone')}}
+                  keyboardType='phone-pad'
                 />
+                { touched.phone && errors.phone && <Text style={styles.errorTxt}>{errors.phone}</Text>}
                 <Text className="text-black font-bold ml-4">Email Address</Text>
                 <TextInput
-                  className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-                  value={email}
+                  className="p-4 bg-gray-100 font-bold text-gray-700 rounded-2xl mb-3"
+                  
                   placeholder="Enter email"
                   placeholderTextColor = "gray"
-                  onChangeText={text => setEmail(text)}
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                  onBlur={() =>{setFieldTouched('email')}}
+                  keyboardType='email-address'
+                  
                 />
+                { touched.email && errors.email && <Text style={styles.errorTxt}>{errors.email}</Text>}
                 <Text className="text-black font-bold ml-4">Password</Text>
                 <TextInput
-                  className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-8"
+                  className="p-4 bg-gray-100 font-bold text-gray-700 rounded-2xl mb-8"
                   secureTextEntry
-                  value={password}
                   placeholderTextColor = "gray"
                   placeholder="Enter password"
-                  onChangeText={text => setPassword(text)}
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  onBlur={() =>{setFieldTouched('password')}}
                 />
+                { touched.password && errors.password && <Text style={styles.errorTxt}>{errors.password}</Text>}
 
                 <TouchableOpacity
                   className="py-3 bg-yellow-400 rounded-xl"
-                  onPress={() => {
-                    register(fname, lname, country_id, phone, email, password);
-                  }}>
+                  style ={{backgroundColor:isValid? "green":"yellow"}}
+                  onPress={handleSubmit}
+                  disabled= {!isValid}
+                  >
                   <Text className="font-xl font-bold text-center text-gray-700">
                     Register
                   </Text>
@@ -128,6 +181,8 @@ const RegisterScreen = ({navigation}) => {
                 </TouchableOpacity>
               </View>
             </View>
+            )}
+            </Formik>
           </View>
         </ScrollView>
         </SafeAreaView>
@@ -135,6 +190,27 @@ const RegisterScreen = ({navigation}) => {
       
     </LinearGradient>
   );
+  
 };
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  input: {
+      height: 40,
+      width: 300,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginBottom: 10,
+      paddingHorizontal: 10,
+  },
+  errorTxt: {
+      fontSize: 12,
+      color: "#FF0D10",
+      textAlign: 'center',
+  },
+}); 
 
 export default RegisterScreen;

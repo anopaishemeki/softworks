@@ -3,20 +3,34 @@ import {
   StatusBar,
   Text,
   TextInput,
+  StyleSheet,
   TouchableOpacity,
   View,
   
-  Image, KeyboardAvoidingView, ScrollView
+  Image, KeyboardAvoidingView, ScrollView,
+  Button,
+  Alert
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {AuthContext} from '../context/AuthContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient'
+import * as yup from 'yup';
+import { Formik } from 'formik';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const {isLoading, login} = useContext(AuthContext);
+
+  const LogInSchema = yup.object().shape({
+   
+    email: yup.string().email('Invalid email').required('Email is required'),
+    password: yup.string().min(3, 'Password must be at least 3 characters').required('Password is required'),
+    });
+
+    
+     
 
   return (
    
@@ -39,6 +53,19 @@ const LoginScreen = ({navigation}) => {
               />
             </View>
           </View>
+          <Formik initialValues={{
+            email:"",
+            password: "",
+          }}
+          validationSchema={LogInSchema}
+          onSubmit={values =>{
+            
+            setEmail(values.email)
+            setPassword(values.password)
+            login(email, password)}
+          }
+          >
+            {({values,errors,touched,handleSubmit,handleChange,setFieldTouched,isValid}) =>(
           <View
             className="flex-1 bg-white px-8 pt-8"
             style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 ,borderBottomLeftRadius: 50, borderBottomRightRadius: 50 }}
@@ -46,23 +73,32 @@ const LoginScreen = ({navigation}) => {
             <View className="form space-y-2">
               <Text className="text-black font-bold ml-4">Email Address</Text>
               <TextInput
-                className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-                value={email}
-                onChangeText={value => setEmail(value)}
+                className="p-4 bg-gray-100 text-gray-700 font-bold rounded-2xl "
+                value={values.email}
+                autoCapitalize={false}
+                onChangeText={handleChange('email')}
                 placeholder="Enter Email"
                 placeholderTextColor = "gray"
+                onBlur={() =>{setFieldTouched('email')}}
               />
+              { touched.email && errors.email && <Text style={styles.errorTxt}>{errors.email}</Text>}
               <Text className="text-black font-bold ml-4">Password</Text>
               <TextInput
-                className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-8"
+                className="p-4 bg-gray-100 text-gray-700 font-bold rounded-2xl "
                 secureTextEntry
-                onChangeText={value => setPassword(value)}
+                autoCapitalize={false}
+                value={values.password}
+                onChangeText={handleChange('password')}
                 placeholderTextColor = "gray"
                 placeholder="Enter Password"
+                onBlur={() =>{setFieldTouched('password');}}
               />
+              {touched.password && errors.password && <Text style={styles.errorTxt}>{errors.password}</Text>}
              
-              <TouchableOpacity className="py-3 bg-yellow-400 rounded-xl"
-               onPress={()=>login(email, password)}>
+              <TouchableOpacity style ={{backgroundColor:isValid? "green":"yellow"}} className="py-3 rounded-xl"
+               onPress={handleSubmit}
+               disabled= {!isValid}
+               >
                 <Text className="font-xl font-bold text-center text-gray-700">
                   Login
                 </Text>
@@ -79,6 +115,8 @@ const LoginScreen = ({navigation}) => {
               </TouchableOpacity>
             </View>
           </View>
+          )}
+          </Formik>
         </View>
        
       
@@ -90,6 +128,26 @@ const LoginScreen = ({navigation}) => {
     </LinearGradient>
   );
 };
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    input: {
+        height: 40,
+        width: 300,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 10,
+        paddingHorizontal: 10,
+    },
+    errorTxt: {
+        fontSize: 12,
+        color: "#FF0D10",
+        textAlign: 'center',
+    },
+}); 
 
 
 
