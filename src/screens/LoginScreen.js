@@ -21,7 +21,7 @@ import { Formik } from 'formik';
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const {isLoading, login} = useContext(AuthContext);
+  const {isLoading, login ,error} = useContext(AuthContext);
 
   const LogInSchema = yup.object().shape({
    
@@ -58,11 +58,14 @@ const LoginScreen = ({navigation}) => {
             password: "",
           }}
           validationSchema={LogInSchema}
-          onSubmit={values =>{
+          onSubmit={async values =>{
             
             setEmail(values.email)
             setPassword(values.password)
-            login(email, password)}
+            await login(email, password)
+            if(!error){
+            Alert.alert("Check your details and try again")}
+          }
           }
           >
             {({values,errors,touched,handleSubmit,handleChange,setFieldTouched,isValid}) =>(
@@ -75,7 +78,7 @@ const LoginScreen = ({navigation}) => {
               <TextInput
                 className="p-4 bg-gray-100 text-gray-700 font-bold rounded-2xl "
                 value={values.email}
-                autoCapitalize={false}
+                autoCapitalize='none'
                 onChangeText={handleChange('email')}
                 placeholder="Enter Email"
                 placeholderTextColor = "gray"
@@ -86,7 +89,7 @@ const LoginScreen = ({navigation}) => {
               <TextInput
                 className="p-4 bg-gray-100 text-gray-700 font-bold rounded-2xl "
                 secureTextEntry
-                autoCapitalize={false}
+                autoCapitalize='none'
                 value={values.password}
                 onChangeText={handleChange('password')}
                 placeholderTextColor = "gray"
@@ -129,19 +132,7 @@ const LoginScreen = ({navigation}) => {
   );
 };
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    input: {
-        height: 40,
-        width: 300,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 10,
-        paddingHorizontal: 10,
-    },
+    
     errorTxt: {
         fontSize: 12,
         color: "#FF0D10",
