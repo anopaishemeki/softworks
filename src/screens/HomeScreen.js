@@ -2,16 +2,12 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Button, StyleSheet, Text, TextInput, TouchableOpacity,StatusBar, View,Image, FlatList,KeyboardAvoidingView, ScrollView} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {AuthContext} from '../context/AuthContext';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowLeftIcon } from "react-native-heroicons/solid";
+
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import {Search,Dashboard} from '../screens'
-import Icon from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 
 import {dummyData} from '../constants'
-import { ProfitIndicator,ActionCenter } from '../components'
 const Tab = createBottomTabNavigator();
 
 const HomeScreen = ({navigation}) => {
@@ -35,9 +31,9 @@ const HomeScreen = ({navigation}) => {
 
   function getCountryById(id) {
     // Find the item with the given ID
-    const item = countries.find(item => item.id === id);
+    const item = countries?.find(item => item?.id === id);
     if (item) {
-      return item.name;
+      return item?.name;
   } else {
       return "";
   }
@@ -72,7 +68,7 @@ const HomeScreen = ({navigation}) => {
                       >
                     <View style={{flexDirection:'row',alignItems:'center'}} >
                         {/* <Icon name='logout' size={30} color="#fff" /> */}
-                        <Image source={require('../assets/images/avatar.jpg')} resizeMode='cover' style={{width:40,height:40,borderRadius:20,marginLeft:15}} />
+                        <Image source={require('../assets/images/logout.png')} resizeMode='cover' style={{width:40,height:40}} />
                     </View>
                     </TouchableOpacity>
                 </View>
@@ -126,7 +122,7 @@ const HomeScreen = ({navigation}) => {
                                         
 
                                     </View>
-                                    <Text style={{fontFamily:'Roboto-Medium',fontSize:14,color:'#333'}} >{getCountryById(item.id)}</Text>
+                                    <Text style={{fontFamily:'Roboto-Medium',fontSize:14,color:'#333'}} >{getCountryById(item?.id)}</Text>
                                 </View>
 
                             </View>

@@ -36,7 +36,7 @@ const RegisterScreen = ({navigation}) => {
       
       <KeyboardAvoidingView style={{flex: 1}}>
       <SafeAreaView>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator = {false}>
           <Spinner visible={isLoading} />
           <View>
             <View className="flex">
@@ -59,46 +59,52 @@ const RegisterScreen = ({navigation}) => {
               className="flex-1 bg-white px-8 pt-8"
               style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}>
               <View className="form space-y-2">
-                <Text className="text-gray-700 ml-4">First Name</Text>
+                <Text className="text-black font-bold ml-4">First Name</Text>
                 <TextInput
                   className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
                   value={fname}
+                  placeholderTextColor = "gray"
                   placeholder="Enter First Name"
                   onChangeText={text => setFname(text)}
                 />
-                <Text className="text-gray-700 ml-4">Last Name</Text>
+                <Text className="text-black font-bold ml-4">Last Name</Text>
                 <TextInput
                   className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
                   value={lname}
+                  placeholderTextColor = "gray"
                   placeholder="Enter Last Name"
                   onChangeText={text => setLname(text)}
                 />
-                <Text className="text-gray-700 ml-4">Country</Text>
+                <Text className="text-black font-bold ml-4">Country</Text>
                 <TextInput
                   className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
                   value={country_id}
+                  placeholderTextColor = "gray"
                   placeholder="Enter Country"
                   onChangeText={text => setCountry_id(text)}
                 />
-                <Text className="text-gray-700 ml-4">Phone No</Text>
+                <Text className="text-black font-bold ml-4">Phone No</Text>
                 <TextInput
                   className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
                   value={phone}
+                  placeholderTextColor = "gray"
                   placeholder="Enter Phone Number"
                   onChangeText={text => setPhone(text)}
                 />
-                <Text className="text-gray-700 ml-4">Email Address</Text>
+                <Text className="text-black font-bold ml-4">Email Address</Text>
                 <TextInput
                   className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
                   value={email}
                   placeholder="Enter email"
+                  placeholderTextColor = "gray"
                   onChangeText={text => setEmail(text)}
                 />
-                <Text className="text-gray-700 ml-4">Password</Text>
+                <Text className="text-black font-bold ml-4">Password</Text>
                 <TextInput
                   className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-8"
                   secureTextEntry
                   value={password}
+                  placeholderTextColor = "gray"
                   placeholder="Enter password"
                   onChangeText={text => setPassword(text)}
                 />

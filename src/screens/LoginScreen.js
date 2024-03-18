@@ -5,7 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  StyleSheet,
+  
   Image, KeyboardAvoidingView, ScrollView
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -25,7 +25,7 @@ const LoginScreen = ({navigation}) => {
     <KeyboardAvoidingView >
       <StatusBar barStyle='light-content' translucent={true} backgroundColor='transparent' />
       
-      <ScrollView  >
+      <ScrollView showsVerticalScrollIndicator ={false} >
       <Spinner visible={isLoading} />
         
           <View >
@@ -44,19 +44,20 @@ const LoginScreen = ({navigation}) => {
             style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 ,borderBottomLeftRadius: 50, borderBottomRightRadius: 50 }}
           >
             <View className="form space-y-2">
-              <Text className="text-gray-700 ml-4">Email Address</Text>
+              <Text className="text-black font-bold ml-4">Email Address</Text>
               <TextInput
                 className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
                 value={email}
                 onChangeText={value => setEmail(value)}
                 placeholder="Enter Email"
+                placeholderTextColor = "gray"
               />
-              <Text className="text-gray-700 ml-4">Password</Text>
+              <Text className="text-black font-bold ml-4">Password</Text>
               <TextInput
                 className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-8"
                 secureTextEntry
                 onChangeText={value => setPassword(value)}
-                
+                placeholderTextColor = "gray"
                 placeholder="Enter Password"
               />
              

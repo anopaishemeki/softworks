@@ -4,7 +4,7 @@ export const portfolio = {
     type:'I'
 }
 
-export const image1 = {image: require("../assets/icons/bitcoin.png")}
+export const image1 = {image: require("../assets/icons/gas.png")}
 export const coins = [
 {
     id:1,
