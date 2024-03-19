@@ -6,9 +6,11 @@ To learn more about React Native, take a look at the following resources:
 - JavaScript 
 - Tailwind (Nativewind) for styling
 - Fetch API and Axios for API calls
-- React Native Async Storage
+- React Native Async Storage for storing the Bearer Token
 - Formik and Yup for form management and validation
 - Github for version control
+- WebStorm as development IDE
+- Windows 11 OS platform
 
 # Getting Started with Softworks App
 
