@@ -128,11 +128,11 @@ const RegisterScreen = ({navigation}) => {
                       {touched.lname && errors.lname && (
                         <Text style={styles.errorTxt}>{errors.lname}</Text>
                       )}
-                      <Text className="text-black font-bold ml-4">Country</Text>
+                      <Text className="text-black font-bold ml-4">Country ID</Text>
                       <TextInput
                         className="p-4 bg-gray-100 font-bold text-gray-700 rounded-2xl mb-3"
                         placeholderTextColor="gray"
-                        placeholder="Enter Country"
+                        placeholder="Enter Country ID"
                         value={values.country_id}
                         onChangeText={handleChange('country_id')}
                         onBlur={() => {
