@@ -1,6 +1,6 @@
 # For a quick Application test download the APK file in the root directory named as softworks.apk
 
-To learn more about React Native, take a look at the following resources:
+-softworks.apk
 
 # Technologies and Tools used:
 
