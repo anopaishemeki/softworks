@@ -1,6 +1,6 @@
 # For a quick Application test download the APK file in the root directory named as softworks.apk
 
--softworks.apk
+- softworks.apk
 
 # Technologies and Tools used:
 
