@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
   const [userInfo, setUserInfo] = useState({});
+  const [registerInfo, setRegisterInfo] = useState({});
   const [products, setProducts] = useState({});
   const [countries, setCountries] = useState({});
   const [error, setError] = useState(false);
@@ -18,24 +19,27 @@ export const AuthProvider = ({children}) => {
     setError(false);
     console.log(fname, lname, country_id, phone, email, password);
 
-    await axios
-      .post(`${BASE_URL}/customer/signup`, {
+    await fetch(`${BASE_URL}/customer/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         fname,
         lname,
         country_id,
         phone,
         email,
         password,
-      })
-      .then(res => {
+      }),
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        console.log(JSON.stringify(responseData));
+        setRegisterInfo(responseData);
         setIsLoading(false);
-        setError(false);
-        console.log(res.data);
-      })
-      .catch(e => {
         setError(true);
-        console.log(`register error ${e?.message}`);
-        setIsLoading(false);
+        console.log(responseData);
       });
   };
 
@@ -43,21 +47,23 @@ export const AuthProvider = ({children}) => {
     setIsLoading(true);
     setError(false);
 
-    await axios
-      .post(`${BASE_URL}/customer/signin`, {
+    await fetch(`${BASE_URL}/customer/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         email,
         password,
-      })
-      .then(res => {
-        let userInfo = res.data;
+      }),
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        console.log(JSON.stringify(responseData));
+        let userInfo = responseData;
         console.log(userInfo);
         setUserInfo(userInfo);
         AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-        setIsLoading(false);
-      })
-      .catch(e => {
-        setError(true);
-        console.log(`login error ${e?.message}`);
         setIsLoading(false);
       });
   };
@@ -118,6 +124,7 @@ export const AuthProvider = ({children}) => {
       value={{
         isLoading,
         userInfo,
+        registerInfo,
         splashLoading,
         register,
         login,

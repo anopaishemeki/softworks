@@ -16,8 +16,6 @@ import {
 } from 'react-native-responsive-screen';
 import {dummyData} from '../constants';
 
-
-
 const HomeScreen = () => {
   const {
     userInfo,
@@ -40,7 +38,12 @@ const HomeScreen = () => {
   }, []);
 
   function getCountryById(id) {
+    const arr = [
+      {id: 1, name: 'ano'},
+      {id: 2, name: 'chris'},
+    ];
     const item = countries?.find(item => item?.id === id);
+    console.log('initial data' + item);
     if (item) {
       return item?.name;
     } else {
@@ -135,7 +138,7 @@ const HomeScreen = () => {
               }}>
               Products
             </Text>
-
+            <Spinner visible={isLoading} />
             <FlatList
               keyExtractor={item => item.id}
               data={products}
@@ -213,7 +216,7 @@ const HomeScreen = () => {
                         fontSize: 14,
                         color: '#333',
                       }}>
-                      {getCountryById(item?.id)}
+                      {getCountryById(item?.country_id)}
                     </Text>
                   </View>
                 </View>

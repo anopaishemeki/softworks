@@ -20,14 +20,7 @@ import * as yup from 'yup';
 import {Formik} from 'formik';
 
 const RegisterScreen = ({navigation}) => {
-  const [fname, setFname] = useState(null);
-  const [lname, setLname] = useState(null);
-  const [country_id, setCountry_id] = useState(null);
-  const [phone, setPhone] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-
-  const {isLoading, register,error} = useContext(AuthContext);
+  const {isLoading, register, error, registerInfo} = useContext(AuthContext);
   const SignInSchema = yup.object().shape({
     fname: yup.string().required('Firstname is required'),
     lname: yup.string().required('lastName is required'),
@@ -35,7 +28,7 @@ const RegisterScreen = ({navigation}) => {
       .string()
       .min(1, 'Country_id must be atleast 1 digits ')
       .max(1, 'Country_id must be atmost 9 digits ')
-      .matches(/^[1-9]|10$/, 'Enter digits only')
+      .matches(/^[1-9]|10$/, 'Enter digits from 1 to 9 only')
       .required('Country_id is required'),
     phone: yup.string().required('Phone is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -83,18 +76,14 @@ const RegisterScreen = ({navigation}) => {
                 }}
                 validationSchema={SignInSchema}
                 onSubmit={async values => {
-                  setFname(values.fname);
-                  setLname(values.lname);
-                  setCountry_id(values.country_id);
-                  setPhone(values.phone);
-                  setEmail(values.email);
-                  setPassword(values.password);
-                  await register(fname, lname, country_id, phone, email, password);
-                  if(!error){
-                    Alert.alert("Check your details and try again")}
-                    else{
-                      Alert.alert("Signup completed. An email has been send to you. Kindly confirm the email to proceed")
-                    }
+                  await register(
+                    values.fname,
+                    values.lname,
+                    values.country_id,
+                    values.phone,
+                    values.email,
+                    values.password,
+                  );
                 }}>
                 {({
                   values,
@@ -207,10 +196,17 @@ const RegisterScreen = ({navigation}) => {
                       {touched.password && errors.password && (
                         <Text style={styles.errorTxt}>{errors.password}</Text>
                       )}
+                      {
+                        <Text style={styles.errorTxt}>
+                          {registerInfo.message}
+                        </Text>
+                      }
 
                       <TouchableOpacity
                         className="py-3 bg-yellow-400 rounded-xl"
-                        style={{backgroundColor: isValid ? "#2249D6":"#2D97DA"}}
+                        style={{
+                          backgroundColor: isValid ? '#2249D6' : '#2D97DA',
+                        }}
                         onPress={handleSubmit}
                         disabled={!isValid}>
                         <Text className="font-xl font-bold text-center text-gray-700">
@@ -224,9 +220,7 @@ const RegisterScreen = ({navigation}) => {
                       </Text>
                       <TouchableOpacity
                         onPress={() => navigation.navigate('Login')}>
-                        <Text className="font-bold text-blue-700">
-                          Login
-                        </Text>
+                        <Text className="font-bold text-blue-700">Login</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -240,8 +234,6 @@ const RegisterScreen = ({navigation}) => {
   );
 };
 const styles = StyleSheet.create({
- 
- 
   errorTxt: {
     fontSize: 12,
     color: '#FF0D10',

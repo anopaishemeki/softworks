@@ -19,9 +19,8 @@ import * as yup from 'yup';
 import {Formik} from 'formik';
 
 const LoginScreen = ({navigation}) => {
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const {isLoading, login, error} = useContext(AuthContext);
+
+  const {isLoading, login, error,userInfo} = useContext(AuthContext);
 
   const LogInSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -66,12 +65,9 @@ const LoginScreen = ({navigation}) => {
                   }}
                   validationSchema={LogInSchema}
                   onSubmit={async values => {
-                    setEmail(values.email);
-                    setPassword(values.password);
-                    await login(email, password);
-                    if (!error) {
-                      Alert.alert('Check your details and try again');
-                    }
+
+                    
+                    await login(values.email, values.password);
                   }}>
                   {({
                     values,
@@ -138,10 +134,15 @@ const LoginScreen = ({navigation}) => {
                             Login
                           </Text>
                         </TouchableOpacity>
+                        { (
+                            <Text style={styles.errorTxt}>{userInfo.message}</Text>
+                        )}
                       </View>
                       <View className="flex-row justify-center mt-7 mb-11">
                         <Text className="text-gray-500 font-semibold px-2 ">
                           Don't have an account?
+
+
                         </Text>
                         <TouchableOpacity
                           onPress={() => navigation.navigate('Register')}>
