@@ -1,4 +1,14 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Technologies and Tools used:
+
+To learn more about React Native, take a look at the following resources:
+
+- React Native CLI
+- JavaScript 
+- Tailwind (Nativewind) for styling
+- Fetch API and Axios for API calls
+- React Native Async Storage
+- Formik and Yup for form management and validation
+- Github for version control
 
 # Getting Started with Softworks App
 
