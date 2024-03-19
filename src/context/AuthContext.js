@@ -35,11 +35,10 @@ export const AuthProvider = ({children}) => {
     })
       .then(response => response.json())
       .then(responseData => {
-        console.log(JSON.stringify(responseData));
         setRegisterInfo(responseData);
         setIsLoading(false);
         setError(true);
-        console.log(responseData);
+        
       });
   };
 
@@ -59,9 +58,7 @@ export const AuthProvider = ({children}) => {
     })
       .then(response => response.json())
       .then(responseData => {
-        console.log(JSON.stringify(responseData));
         let userInfo = responseData;
-        console.log(userInfo);
         setUserInfo(userInfo);
         AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
         setIsLoading(false);
@@ -82,7 +79,6 @@ export const AuthProvider = ({children}) => {
       })
       .then(res => {
         setProducts(res.data);
-        console.log(products);
       });
   };
   const fetchCountries = async () => {
@@ -92,18 +88,14 @@ export const AuthProvider = ({children}) => {
       })
       .then(res => {
         setCountries(res.data);
-        console.log(countries);
       });
   };
 
   const isLoggedIn = async () => {
     try {
       setSplashLoading(true);
-
       let userInfo = await AsyncStorage.getItem('userInfo');
-      console.log(userInfo);
       userInfo = JSON.parse(userInfo);
-
       if (userInfo) {
         setUserInfo(userInfo);
       }

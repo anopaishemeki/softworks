@@ -1,6 +1,5 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {
-  Button,
   Text,
   TextInput,
   TouchableOpacity,
@@ -9,7 +8,6 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Image,
-  Alert,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {AuthContext} from '../context/AuthContext';

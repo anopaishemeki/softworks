@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {
   StatusBar,
   Text,
@@ -9,7 +9,6 @@ import {
   Image,
   KeyboardAvoidingView,
   ScrollView,
-  Alert,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {AuthContext} from '../context/AuthContext';
@@ -19,8 +18,7 @@ import * as yup from 'yup';
 import {Formik} from 'formik';
 
 const LoginScreen = ({navigation}) => {
-
-  const {isLoading, login, error,userInfo} = useContext(AuthContext);
+  const {isLoading, login, userInfo} = useContext(AuthContext);
 
   const LogInSchema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -65,8 +63,6 @@ const LoginScreen = ({navigation}) => {
                   }}
                   validationSchema={LogInSchema}
                   onSubmit={async values => {
-
-                    
                     await login(values.email, values.password);
                   }}>
                   {({
@@ -134,15 +130,15 @@ const LoginScreen = ({navigation}) => {
                             Login
                           </Text>
                         </TouchableOpacity>
-                        { (
-                            <Text style={styles.errorTxt}>{userInfo.message}</Text>
-                        )}
+                        {
+                          <Text style={styles.errorTxt}>
+                            {userInfo.message}
+                          </Text>
+                        }
                       </View>
                       <View className="flex-row justify-center mt-7 mb-11">
                         <Text className="text-gray-500 font-semibold px-2 ">
                           Don't have an account?
-
-
                         </Text>
                         <TouchableOpacity
                           onPress={() => navigation.navigate('Register')}>

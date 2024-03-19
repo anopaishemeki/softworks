@@ -31,17 +31,13 @@ const HomeScreen = () => {
     fetchCountries();
     fetchProducts();
 
-    console.log('Fetching products : ' + products);
+    
 
-    console.log('length:' + products);
-    console.log('length:' + dummyData.coins);
+ 
   }, []);
 
   function getCountryById(id) {
-    const arr = [
-      {id: 1, name: 'ano'},
-      {id: 2, name: 'chris'},
-    ];
+   
     const item = countries?.find(item => item?.id === id);
     console.log('initial data' + item);
     if (item) {
