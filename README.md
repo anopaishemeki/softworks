@@ -1,4 +1,4 @@
-# For a quick Application test download the APK file in the root directory named as softworks.apk
+# For a quick Application test download and install the APK file in the root directory named as softworks.apk
 
 - softworks.apk
 
