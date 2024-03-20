@@ -37,20 +37,13 @@ const HomeScreen = () => {
   }, []);
 
   function getCountryById(id) {
+
+    return countries.length > 0 ? countries.find(item => item?.id === id).name : "Unspecified Country";
    
-    const item = countries?.find(item => item?.id === id);
-    console.log('initial data' + item);
-    if (item) {
-      return item?.name;
-    } else {
-      return '';
-    }
   }
 
   return (
     <View style={{flex: 1}}>
-      <Spinner visible={isLoading} />
-
       <StatusBar
         barStyle="light-content"
         translucent={true}

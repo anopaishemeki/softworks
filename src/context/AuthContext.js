@@ -73,12 +73,14 @@ export const AuthProvider = ({children}) => {
   };
 
   const fetchProducts = async () => {
+    setIsLoading(true);
     await axios
       .get(`${BASE_URL}/products`, {
         headers: {Authorization: `Bearer ${userInfo.token}`},
       })
       .then(res => {
         setProducts(res.data);
+        setIsLoading(false);
       });
   };
   const fetchCountries = async () => {
